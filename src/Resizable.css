@@ -1,0 +1,75 @@
+.react-resizable-handle {
+  position: absolute;
+}
+
+.react-resizable-handle.handle-n {
+  cursor: n-resize;
+  top: 0px;
+  left: 0px;
+  height: 1px;
+  width: 100%;
+  z-index: 99;
+}
+
+.react-resizable-handle.handle-e {
+  cursor: e-resize;
+  top: 0px;
+  right: 0px;
+  width: 1px;
+  height: 100%;
+  z-index: 99;
+}
+
+.react-resizable-handle.handle-s {
+  cursor: s-resize;
+  bottom: 0px;
+  left: 0px;
+  height: 1px;
+  width: 100%;
+  z-index: 99;
+}
+
+.react-resizable-handle.handle-w {
+  cursor: s-resize;
+  top: 0px;
+  left: 0px;
+  width: 1px;
+  height: 100%;
+  z-index: 99;
+}
+
+.react-resizable-handle.handle-nw {
+  cursor: nw-resize;
+  top: -1px;
+  left: -1px;
+  width: 2px;
+  height: 2px;
+  z-index: 100;
+}
+
+.react-resizable-handle.handle-ne {
+  cursor: ne-resize;
+  right: -1px;
+  top: -1px;
+  width: 2px;
+  height: 2px;
+  z-index: 100;
+}
+
+.react-resizable-handle.handle-sw {
+  cursor: sw-resize;
+  bottom: -1px;
+  left: -1px;
+  width: 2px;
+  height: 2px;
+  z-index: 100;
+}
+
+.react-resizable-handle.handle-se {
+  cursor: se-resize;
+  bottom: -1px;
+  right: -1px;
+  width: 2px;
+  height: 2px;
+  z-index: 100;
+}
