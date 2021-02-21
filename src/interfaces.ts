@@ -17,18 +17,16 @@ interface TargetNodeStyle {
 
 type TargetNodeMatrix = number[][]
 
-interface HandlesRef {
-  current: {
-    n: HTMLElement | null
-    e: HTMLElement | null
-    s: HTMLElement | null
-    w: HTMLElement | null
-    nw: HTMLElement | null
-    ne: HTMLElement | null
-    sw: HTMLElement | null
-    se: HTMLElement | null
-  }
-}
+type HandlesRef = React.MutableRefObject<{
+  n: HTMLElement | null
+  e: HTMLElement | null
+  s: HTMLElement | null
+  w: HTMLElement | null
+  nw: HTMLElement | null
+  ne: HTMLElement | null
+  sw: HTMLElement | null
+  se: HTMLElement | null
+}>
 
 interface InitialData {
   handle: string

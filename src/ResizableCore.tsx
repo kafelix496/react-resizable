@@ -16,9 +16,7 @@ import type {
 
 interface ResizableCoreProps extends ResizableProps {
   handlesRef: HandlesRef
-  targetRef: {
-    current: HTMLElement | null
-  }
+  targetRef: React.MutableRefObject<HTMLElement | null>
   targetMinWidth?: number
   targetMinHeight?: number
 }
