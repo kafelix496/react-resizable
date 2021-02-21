@@ -1,33 +1,14 @@
 import React from 'react'
 
 import ResizableCore from './ResizableCore'
-import type { HandlesRef, ResizableProps } from './interfaces'
+import ResizableHandles from './ResizableHandles'
 
-import { getTrimedHandles } from './utils'
-
-import './Resizable.css'
-
-const handleElements = (
-  handles: string | undefined,
-  handlesRef: HandlesRef
-): JSX.Element[] => {
-  const trimedHandles = getTrimedHandles(handles)
-
-  return trimedHandles.map((handleName) => (
-    <div
-      key={handleName}
-      className={`react-resizable-handle handle-${handleName}`}
-      ref={(element) => {
-        handlesRef.current = { ...handlesRef.current, [handleName]: element }
-      }}
-    />
-  ))
-}
+import type { ResizableProps } from './interfaces'
 
 const Resizable: React.FC<ResizableProps> = (props) => {
   // console.log('Resizable', props)
 
-  const { children, disabled = false, handles } = props
+  const { children, handles } = props
 
   const targetRef = React.useRef(null)
   const handlesRef = React.useRef({
@@ -52,7 +33,7 @@ const Resizable: React.FC<ResizableProps> = (props) => {
           <>
             {childrenClassName}
 
-            {!disabled ? handleElements(handles, handlesRef) : ''}
+            {<ResizableHandles handles={handles} handlesRef={handlesRef} />}
           </>
         )
       })}

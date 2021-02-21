@@ -46,7 +46,7 @@ describe('Test Resizable component', () => {
     expect(testDiv).not.toHaveClass('resizing')
   })
 
-  test("should not has resize handle if 'disable' prop is true", () => {
+  test("should not start resize if 'disable' prop is true", () => {
     const { getByTestId } = render(
       <Resizable resizingClassName="resizing" disabled={true}>
         <div data-testid="test-div" />
@@ -58,7 +58,11 @@ describe('Test Resizable component', () => {
       '.react-resizable-handle'
     ) as HTMLElement
 
-    expect(resizeHandleElement).toBe(null)
+    fireEvent.mouseDown(resizeHandleElement)
+    expect(testDiv).toHaveClass('react-resizable')
+    fireEvent.mouseUp(resizeHandleElement)
+    expect(testDiv).toHaveClass('react-resizable')
+    expect(testDiv).not.toHaveClass('resizing')
   })
 
   test("should have handles 's', 'e', 'se' as default", () => {
@@ -80,8 +84,7 @@ describe('Test Resizable component', () => {
           return domNode
         }
 
-        return domNode
-          .getAttribute('class')
+        return (domNode.getAttribute('class') ?? '')
           .split(' ')
           .find((className) => /^handle/g.test(className))
       })
@@ -103,12 +106,7 @@ describe('Test Resizable component', () => {
     expect(resizeHandlesElement.length).toBe(2)
     expect(
       Array.from(resizeHandlesElement).map((domNode) => {
-        if (domNode === null) {
-          return domNode
-        }
-
-        return domNode
-          .getAttribute('class')
+        return (domNode.getAttribute('class') ?? '')
           .split(' ')
           .find((className) => /^handle/g.test(className))
       })
@@ -130,12 +128,7 @@ describe('Test Resizable component', () => {
     expect(resizeHandlesElement.length).toBe(2)
     expect(
       Array.from(resizeHandlesElement).map((domNode) => {
-        if (domNode === null) {
-          return domNode
-        }
-
-        return domNode
-          .getAttribute('class')
+        return (domNode.getAttribute('class') ?? '')
           .split(' ')
           .find((className) => /^handle/g.test(className))
       })
@@ -219,9 +212,11 @@ describe('Test Resizable component', () => {
       uiValue = null
 
       fireEvent.mouseMove(resizeHandleElement, { clientX: 70, clientY: 25 })
-      expect(uiValue!.targetNode).toBe(testDiv)
-      expect(uiValue!.startSize).toEqual({ width: 50, height: 50 })
-      expect(uiValue!.currentSize).toEqual({ width: 70, height: 70 })
+      if (uiValue !== null) {
+        expect((uiValue as Ui).targetNode).toBe(testDiv)
+        expect((uiValue as Ui).startSize).toEqual({ width: 50, height: 50 })
+        expect((uiValue as Ui).currentSize).toEqual({ width: 70, height: 70 })
+      }
       expect(((eventValue as unknown) as MouseEvent).type).toBe(
         new MouseEvent('mousemove').type
       )
@@ -229,9 +224,11 @@ describe('Test Resizable component', () => {
       uiValue = null
 
       fireEvent.mouseUp(resizeHandleElement, { clientX: 70, clientY: 25 })
-      expect(uiValue!.targetNode).toBe(testDiv)
-      expect(uiValue!.startSize).toEqual({ width: 50, height: 50 })
-      expect(uiValue!.currentSize).toEqual({ width: 70, height: 70 })
+      if (uiValue !== null) {
+        expect((uiValue as Ui).targetNode).toBe(testDiv)
+        expect((uiValue as Ui).startSize).toEqual({ width: 50, height: 50 })
+        expect((uiValue as Ui).currentSize).toEqual({ width: 70, height: 70 })
+      }
       expect(((eventValue as unknown) as MouseEvent).type).toBe(
         new MouseEvent('mouseup').type
       )

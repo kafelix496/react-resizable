@@ -23,8 +23,8 @@ const convertHandles = (handlesString: string | undefined): string[] => {
     })
   )(handlesString)
 }
-const getTrimedHandles = (handleString: string | undefined): string[] => {
-  return (R.compose as any)(convertHandles, R.defaultTo('e, s, se'))(handleString)
+const getTrimedHandles = (handlesString: string | undefined): string[] => {
+  return (R.compose as any)(convertHandles, R.defaultTo('e, s, se'))(handlesString)
 }
 
 export { filterProperHandles, getTrimedHandles }
