@@ -236,7 +236,7 @@ describe('Test Resizable component', () => {
       uiValue = null
     })
 
-    test('rotate without pressing shiftKey', () => {
+    test('should fix opposite side position while resizing', () => {
       const matrix3d45Deg =
         'matrix3d(0.7071067811865476,0.7071067811865475,0,0,-0.7071067811865475,0.7071067811865476,0,0,0,0,1,0,0,0,0,1)'
 
