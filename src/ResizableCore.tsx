@@ -70,7 +70,7 @@ const ResizableCore: React.FC<ResizableCoreProps> = (props): JSX.Element => {
       ...prev,
       targetNode: targetRef.current
     }))
-  }, [targetRef.current])
+  }, [targetRef, setUiData])
 
   React.useEffect(() => {
     const mouseDownHandle = (activeHandle: string) => (event: MouseEvent): void => {
@@ -127,8 +127,10 @@ const ResizableCore: React.FC<ResizableCoreProps> = (props): JSX.Element => {
       setMouseDownStatus(true)
     }
 
-    if (handlesRef.current !== null) {
-      Object.entries(handlesRef.current).forEach(([key, value]) => {
+    const handlesElement = handlesRef.current
+
+    if (handlesElement !== null) {
+      Object.entries(handlesElement).forEach(([key, value]) => {
         if (value !== null) {
           addEvent(value, 'mousedown', mouseDownHandle(key) as EventListener)
         }
@@ -136,13 +138,26 @@ const ResizableCore: React.FC<ResizableCoreProps> = (props): JSX.Element => {
     }
 
     return () => {
-      Object.entries(handlesRef.current).forEach(([key, value]) => {
-        if (value !== null) {
-          removeEvent(value, 'mousedown', mouseDownHandle(key) as EventListener)
-        }
-      })
+      if (handlesElement !== null) {
+        Object.entries(handlesElement).forEach(([key, value]) => {
+          if (value !== null) {
+            removeEvent(value, 'mousedown', mouseDownHandle(key) as EventListener)
+          }
+        })
+      }
     }
-  }, [handles])
+  }, [
+    handles,
+    disabled,
+    handlesRef,
+    initialDataRef,
+    resizeStart,
+    resizingClassName,
+    setInitialData,
+    setUiData,
+    targetRef,
+    uiData
+  ])
 
   /**
    * if initial mouse coordinate || target node style is changed
@@ -171,7 +186,7 @@ const ResizableCore: React.FC<ResizableCoreProps> = (props): JSX.Element => {
         )
       }))
     }
-  }, [initialDataRef.current.mouseCoordinate, initialDataRef.current.targetNodeStyle])
+  }, [initialDataRef, setInitialData])
 
   React.useEffect(() => {
     const mouseMoveHandler = (event: MouseEvent): void => {
@@ -274,7 +289,20 @@ const ResizableCore: React.FC<ResizableCoreProps> = (props): JSX.Element => {
       removeEvent(document, 'mousemove', mouseMoveHandler as EventListener)
       removeEvent(document, 'mouseup', mouseUpHandler as EventListener)
     }
-  }, [isMouseDown])
+  }, [
+    isMouseDown,
+    currentMouseCoordinateRef,
+    initialDataRef,
+    resizeStop,
+    resizing,
+    resizingClassName,
+    setCurrentMouseCoordinate,
+    setUiData,
+    targetMinWidth,
+    targetMinHeight,
+    targetRef,
+    uiData
+  ])
 
   return React.cloneElement(React.Children.only(children))
 }
